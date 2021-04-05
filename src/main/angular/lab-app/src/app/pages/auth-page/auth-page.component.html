@@ -1,0 +1,56 @@
+<!--suppress HtmlFormInputWithoutLabel -->
+<p-toolbar>
+  <div class="p-toolbar-group-left" style="padding: 10px">
+    <h2 style="text-align: center">{{" Кузнеченков Алексей Сергеевич Р3212 Вариант 91653"}}</h2>
+  </div>
+</p-toolbar>
+
+<div class="p-grid p-align-center p-justify-center vertical-container">
+  <div class="login-div p-col p-col-align-center">
+    <p-card [hidden]="authService.loggedIn">
+      <h2 style="text-align: center">{{"Войдите в свой аккаунт или создайте новый"}}</h2>
+      <!-- Error messages -->
+      <div *ngIf="authService.error$ | async as error" style="text-align: center">
+        <p-message [text]="error" severity="error"></p-message>
+      </div>
+      <!-- Form -->
+      <form [formGroup]="authForm">
+        <div class="p-field">
+          <div class="p-inputgroup">
+            <span class="p-inputgroup-addon"><i class="pi pi-lock"></i></span>
+            <input type="text" pInputText [placeholder]="'Логин'" formControlName="username">
+          </div>
+          <div *ngIf="usernameForm?.invalid && usernameForm?.touched" class="p-invalid">
+            <small *ngIf="usernameForm?.errors?.required">
+              {{"Необходимо ввести логин."}}
+            </small>
+            <small *ngIf="usernameForm?.errors?.minlength || usernameForm?.errors?.maxlength">
+              {{"Логин должен быть от 4 до 15 символов"}}
+            </small>
+          </div>
+        </div>
+        <div class="p-field">
+          <div class="p-inputgroup">
+            <span class="p-inputgroup-addon"><i class="pi pi-lock"></i></span>
+            <input type="password" pPassword pInputText
+                   [placeholder]="'Пароль'" formControlName="password">
+          </div>
+          <div *ngIf="passwordForm?.invalid && passwordForm?.touched" class="p-invalid">
+            <small *ngIf="passwordForm?.errors?.required">
+              {{"Необходимо ввести пароль"}}
+            </small>
+            <small *ngIf="passwordForm?.errors?.minlength">
+              {{"Пароль должен быть длиннее четырех символов"}}
+            </small>
+          </div>
+        </div>
+        <div class="p-grid p-justify-around">
+          <p-button (click)="login()" [disabled]="authForm.invalid">{{'Войти'}}</p-button>
+          <p-button (click)="register()" [disabled]="authForm.invalid">{{"Зарегистрироваться"}}</p-button>
+          <p-button (click)="fillAdmin()">[Admin]</p-button>
+        </div>
+      </form>
+    </p-card>
+    <app-logged-in-card [hidden]="!authService.loggedIn"></app-logged-in-card>
+  </div>
+</div>

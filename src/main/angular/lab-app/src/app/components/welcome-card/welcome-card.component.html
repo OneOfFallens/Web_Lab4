@@ -1,0 +1,6 @@
+<p-card>
+  <h2>{{'Добро пожаловать!'}}</h2>
+  <p> {{"Вы вошли как"}} <b>{{ authService.username }}</b></p>
+  <p-button (click)="authService.signOut()">{{"Выйти"}}</p-button>
+  <p-button id="routerButton" routerLink="/">{{ "На главную"}}</p-button>
+</p-card>
